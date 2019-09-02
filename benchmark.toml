@@ -1,0 +1,9 @@
+[cbbackupmgr random write]
+end_fsync=1
+fallocate=native
+file_append=1
+fsync=50
+numjobs=10
+readwrite=randwrite
+size=10GB
+unlink=1
