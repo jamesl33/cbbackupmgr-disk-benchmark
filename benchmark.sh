@@ -13,18 +13,22 @@ display_help() {
     echo " -h, --help       Show this help dialog"
 }
 
-ARGS=$(getopt --options "d:,h" --longoptions "directory:,help" -- "$@")
+ARGS=$(getopt --options "d:,s:,w:,h" --longoptions "directory:,size:,workers:,help" -- "$@")
 
 eval set -- "$ARGS"
 unset ARGS
 
 declare -A args
-args=(["directory"]="." ["help"]="")
+args=(["directory"]="." ["size"]="1GB" ["workers"]="1" ["help"]="")
 
 while true; do
     case "$1" in
         -d|--directory)
             shift; args["directory"]=$1; shift;;
+        -s|--size)
+            shift; args["size"]=$1; shift;;
+        -w|--workers)
+            shift; args["workers"]=$1; shift;;
         -h|--help)
             args["help"]=1; shift;;
         --)
@@ -41,4 +45,4 @@ if [[ ! -d ${args["directory"]} ]]; then
     echo "Error: directory '${args["directory"]}' does not exist" 1>&2 && exit 1
 fi
 
-fio --directory ${args["directory"]} benchmark.toml | tee benchmark.log
+fio --directory ${args["directory"]} --size ${args["size"]} --numjobs ${args["workers"]} benchmark.toml | tee benchmark.log

@@ -17,6 +17,16 @@ To benchmark a specifc disk/directory run the script passing the '-d/--directory
 $ ./benchmark.sh --directory /mnt/data
 ```
 
+To change the size of the files created run the script passing the '-d/--directory' argument.
+```sh
+$ ./benchmark.sh --directory /mnt/data --size 50GB
+```
+
+The change the amount of jobs created by FIO run the script passing the '-w/--workers' argument.
+```sh
+$ ./benchmark.sh --directory /mnt/data --size 50GB --workers 4
+```
+
 License
 -------
 MIT License
